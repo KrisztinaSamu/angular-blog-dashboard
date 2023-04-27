@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { AngularFireModule } from '@angular/fire/compat';
+import { FirestoreModule } from '@angular/fire/firestore'
 import { environment } from 'src/environments/environment.development';
 
 import { AppComponent } from './app.component';
@@ -22,11 +24,12 @@ import { CategoriesComponent } from './categories/categories.component';
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    FirestoreModule,
     FormsModule
   ],
-  providers: [],
+  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
