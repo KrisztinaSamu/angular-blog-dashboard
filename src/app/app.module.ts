@@ -1,18 +1,26 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'; // <form class="text-center" #categoryForm="ngForm" (ngSubmit)="onSubmit(categoryForm)"> miatt kell
 
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+//import { FirebaseApp } from '@angular/fire/app';
 import { AngularFireModule } from '@angular/fire/compat';
 import { FirestoreModule } from '@angular/fire/firestore'
+
 import { environment } from 'src/environments/environment.development';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AppRoutingModule } from './app-routing.module';
+
 import { CategoriesComponent } from './categories/categories.component';
+
+//plussz importok a működés miatt
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getDatabase, provideDatabase } from '@angular/fire/database';
 
 @NgModule({
   declarations: [
@@ -27,9 +35,12 @@ import { CategoriesComponent } from './categories/categories.component';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     FirestoreModule,
-    FormsModule
+    FormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideFirestore(() => getFirestore()),
+    provideDatabase(() => getDatabase()),
   ],
-  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment}],
+  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}/*, FirebaseApp*/],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

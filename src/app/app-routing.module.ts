@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
+//import { BrowserModule } from '@angular/platform-browser';
+//import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent},
-  { path: 'categories', component: CategoriesComponent}
+  { path: 'dashboard', component: DashboardComponent},
+  { path: 'categories', component: CategoriesComponent},
 ];
 
 
 @NgModule({
-  declarations: [],
   imports: [
-    CommonModule,
+   // BrowserModule,
+    //CommonModule,
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule]

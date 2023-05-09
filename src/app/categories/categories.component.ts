@@ -1,36 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
-import { Firestore, collection } from '@angular/fire/firestore';
+import { Firestore, getFirestore } from '@angular/fire/firestore';
+import { collection, addDoc } from '@angular/fire/firestore';
+
+
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css']
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent {
 
-  constructor(private angFireSt:Firestore) {}
-
-  ngOnInit(): void {
-    
-  }
+  constructor(private firestore: Firestore) { }
 
   onSubmit(categoryForm: NgForm) {
-    let categoryData = {
+
+    let categoryData: any = {
       category: categoryForm.value.category
     }
 
-    let categoriesCollection = collection(this.angFireSt,'categories');
+    const docRef = addDoc(collection(this.firestore, 'categories'), {
+      categoryData
+    });
+  
 
-    /*let dataToForm = categoriesCollection.add(categoryData).then(docRef => {
-      console.log(docRef);
-    })
-    .catch(err => { console.log(err) });*/
-    console.log(categoriesCollection)
-    
-
+    console.log("Document written with ID: ", docRef);
   }
 
 }
