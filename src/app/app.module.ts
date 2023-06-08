@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // <form class="text-center" #categoryForm="ngForm" (ngSubmit)="onSubmit(categoryForm)"> miatt kell
+import { ToastrModule } from 'ngx-toastr';
 
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-//import { FirebaseApp } from '@angular/fire/app';
 import { AngularFireModule } from '@angular/fire/compat';
 import { FirestoreModule } from '@angular/fire/firestore'
 
@@ -39,8 +39,9 @@ import { getDatabase, provideDatabase } from '@angular/fire/database';
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
+    ToastrModule.forRoot()
   ],
-  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}/*, FirebaseApp*/],
+  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

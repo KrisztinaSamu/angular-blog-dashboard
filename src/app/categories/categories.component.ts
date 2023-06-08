@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Firestore, getFirestore } from '@angular/fire/firestore';
-import { collection, addDoc } from '@angular/fire/firestore';
+import { CategoriesService } from '../services/categories.service';
+import { Category } from '../models/category';
+/*import { Firestore } from '@angular/fire/firestore';
+import { collection, addDoc, doc } from '@angular/fire/firestore';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';*/
 
 
 
@@ -12,20 +15,55 @@ import { collection, addDoc } from '@angular/fire/firestore';
 })
 export class CategoriesComponent {
 
-  constructor(private firestore: Firestore) { }
+  constructor( private categoryService: CategoriesService ) { }
 
-  onSubmit(categoryForm: NgForm) {
+ onSubmit(categoryForm: NgForm) {
 
-    let categoryData: any = {
-      category: categoryForm.value.category
+    let categoryData: Category = {
+      category: categoryForm.value.category,
     }
 
-    const docRef = addDoc(collection(this.firestore, 'categories'), {
-      categoryData
-    });
-  
+    this.categoryService.saveData(categoryData)
+    /* // Regular expression pattern
+    const CATEGORY_PATTERN = /^[A-Za-z\s]+$/;
 
-    console.log("Document written with ID: ", docRef);
+    let categoryData: any = {
+      category: categoryForm.value.category,
+    }
+
+    // Custom validator function
+    function categoryValidator(categoryData: any) {
+
+      if (categoryData && !CATEGORY_PATTERN.test(categoryData)) {
+        return { invalidCategory: true };
+      }
+      return null;
+    }
+    categoryValidator(categoryData);
+
+
+
+    let subCategoryData: any = {
+      subCategory: 'subCategory1',
+    }
+
+    addDoc(collection(this.firestore, 'categories'), categoryData)
+
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef.id);
+
+        const subCollectionRef = collection(doc(this.firestore, 'categories', docRef.id), 'subcategories');
+        addDoc(subCollectionRef, subCategoryData)
+          .then((subDocRef: any) => {
+            console.log('Subdocument written with ID: ', subDocRef.id);
+          })
+          .catch((error) => {
+            console.error('Error adding document: ', error);
+          });
+      })
+      .catch((error) => {
+        console.error('Error adding document: ', error);
+      });*/
+
   }
-
 }
